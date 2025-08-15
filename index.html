@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>SkillsUSA Club — [Your School]</title>
+        <meta
+            name="description"
+            content="Join [Your School]'s SkillsUSA club. Build real skills, lead with confidence, compete at the highest level."
+        />
+        <style>
+            :root {
+                --bg: #0f172a; /* slate-900 */
+                --panel: #0b1223; /* deeper navy */
+                --text: #e6e9f2; /* near-white */
+                --muted: #b6c0d9;
+                --brand-1: #6b71ff; /* indigo */
+                --brand-2: #d946ef; /* fuchsia */
+                --brand-3: #22d3ee; /* cyan */
+                --accent: #ffb020; /* warm accent for highlights */
+                --card: #101a33;
+                --ring: rgba(255, 255, 255, 0.12);
+                --success: #22c55e;
+                --danger: #ef4444;
+                --max: 1200px;
+                --radius: 18px;
+                --shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+            }
+            *,
+            *:before,
+            *:after {
+                box-sizing: border-box;
+            }
+            html,
+            body {
+                margin: 0;
+                height: 100%;
+                background: var(--bg);
+                color: var(--text);
+                font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI,
+                    Roboto, Inter, Helvetica, Arial, "Apple Color Emoji",
+                    "Segoe UI Emoji";
+            }
+            a {
+                color: inherit;
+                text-decoration: none;
+            }
+            .container {
+                max-width: var(--max);
+                margin: 0 auto;
+                padding: 0 24px;
+            }
+            /* ====== Slack-ish gradient hero with floating blobs ====== */
+            .hero {
+                position: relative;
+                overflow: hidden;
+                background: radial-gradient(
+                        1200px 600px at -10% -20%,
+                        rgba(107, 113, 255, 0.25),
+                        transparent 60%
+                    ),
+                    radial-gradient(
+                        800px 500px at 110% 10%,
+                        rgba(34, 211, 238, 0.2),
+                        transparent 60%
+                    ),
+                    radial-gradient(
+                        900px 600px at 50% 120%,
+                        rgba(217, 70, 239, 0.18),
+                        transparent 58%
+                    ),
+                    linear-gradient(180deg, #0e1530, #0a1124 60%);
+                padding-bottom: 40px;
+            }
+            .blob {
+                position: absolute;
+                filter: blur(30px);
+                opacity: 0.55;
+                mix-blend-mode: screen;
+                animation: float 12s ease-in-out infinite;
+            }
+            .blob.one {
+                width: 260px;
+                height: 260px;
+                background: radial-gradient(
+                    circle at 30% 30%,
+                    var(--brand-1),
+                    transparent 60%
+                );
+                top: 10%;
+                left: -60px;
+            }
+            .blob.two {
+                width: 320px;
+                height: 320px;
+                background: radial-gradient(
+                    circle at 70% 40%,
+                    var(--brand-2),
+                    transparent 60%
+                );
+                top: 30%;
+                right: -80px;
+                animation-delay: 2s;
+            }
+            .blob.three {
+                width: 280px;
+                height: 280px;
+                background: radial-gradient(
+                    circle at 50% 50%,
+                    var(--brand-3),
+                    transparent 60%
+                );
+                bottom: -60px;
+                left: 30%;
+                animation-delay: 4s;
+            }
+            @keyframes float {
+                0%,
+                100% {
+                    transform: translateY(0px);
+                }
+                50% {
+                    transform: translateY(-20px);
+                }
+            }
+            /* ====== Nav ====== */
+            .nav {
+                position: sticky;
+                top: 0;
+                background: rgba(10, 17, 36, 0.65);
+                backdrop-filter: saturate(160%) blur(12px);
+                border-bottom: 1px solid var(--ring);
+                z-index: 20;
+            }
+            .nav-inner {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                height: 64px;
+            }
+            .brand {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                font-weight: 700;
+            }
+            .brand-badge {
+                width: 28px;
+                height: 28px;
+                border-radius: 8px;
+                background: conic-gradient(
+                    from 0deg,
+                    var(--brand-1),
+                    var(--brand-2),
+                    var(--brand-3),
+                    var(--brand-1)
+                );
+                box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.12) inset;
+            }
+            .nav a.link {
+                opacity: 0.85;
+                margin-left: 20px;
+            }
+            .nav a.cta {
+                margin-left: 20px;
+                background: linear-gradient(
+                    135deg,
+                    var(--brand-1),
+                    var(--brand-2)
+                );
+                padding: 10px 14px;
+                border-radius: 12px;
+                font-weight: 600;
+                box-shadow: var(--shadow);
+            }
+            /* ====== Hero content ====== */
+            .hero-grid {
+                display: grid;
+                grid-template-columns: 1.2fr 0.8fr;
+                gap: 40px;
+                align-items: center;
+                padding: 60px 0 20px;
+            }
+            .eyebrow {
+                display: inline-flex;
+                gap: 10px;
+                align-items: center;
+                background: rgba(255, 255, 255, 0.06);
+                border: 1px solid var(--ring);
+                border-radius: 999px;
+                padding: 6px 10px;
+                font-size: 12px;
+            }
+            .eyebrow .dot {
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                background: var(--accent);
+            }
+            h1 {
+                font-size: clamp(36px, 4.5vw, 56px);
+                line-height: 1.05;
+                margin: 14px 0 10px;
+            }
+            .sub {
+                font-size: clamp(16px, 2.2vw, 19px);
+                opacity: 0.9;
+            }
+            .cta-row {
+                display: flex;
+                gap: 14px;
+                margin-top: 22px;
+                flex-wrap: wrap;
+            }
+            .btn {
+                display: inline-flex;
+                align-items: center;
+                gap: 10px;
+                padding: 12px 16px;
+                border-radius: 14px;
+                border: 1px solid var(--ring);
+                background: #0f1936;
+                font-weight: 600;
+            }
+            .btn.primary {
+                background: linear-gradient(
+                    135deg,
+                    var(--brand-1),
+                    var(--brand-2)
+                );
+                border-color: transparent;
+            }
+            .hero-card {
+                background: linear-gradient(180deg, #0b1331, #0a122b);
+                border: 1px solid var(--ring);
+                border-radius: var(--radius);
+                padding: 20px;
+                box-shadow: var(--shadow);
+            }
+            .chip {
+                display: inline-block;
+                padding: 6px 10px;
+                border-radius: 999px;
+                background: rgba(255, 255, 255, 0.06);
+                border: 1px solid var(--ring);
+                font-size: 12px;
+            }
+            .hero-stats {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 12px;
+                margin-top: 12px;
+            }
+            .stat {
+                background: var(--card);
+                border: 1px solid var(--ring);
+                border-radius: 14px;
+                padding: 16px;
+                text-align: center;
+            }
+            .stat .num {
+                font-weight: 800;
+                font-size: 26px;
+            }
+            .stat .label {
+                opacity: 0.8;
+                font-size: 12px;
+                margin-top: 6px;
+            }
+            /* ====== Sections ====== */
+            section {
+                padding: 72px 0;
+            }
+            .section-title {
+                font-size: clamp(28px, 3.2vw, 40px);
+                margin: 0 0 8px;
+            }
+            .section-sub {
+                opacity: 0.85;
+                max-width: 840px;
+            }
+            /* ====== SkillsUSA at a glance ====== */
+            .grid {
+                display: grid;
+                gap: 18px;
+            }
+            .grid.cols-3 {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            .card {
+                background: var(--card);
+                border: 1px solid var(--ring);
+                border-radius: var(--radius);
+                padding: 22px;
+                box-shadow: var(--shadow);
+            }
+            .kpi {
+                font-size: clamp(28px, 4vw, 48px);
+                font-weight: 800;
+                letter-spacing: -0.02em;
+            }
+            .kpi-label {
+                opacity: 0.85;
+            }
+            /* ====== Achievements ticker & cards ====== */
+            .ticker-wrap {
+                overflow: hidden;
+                border: 1px solid var(--ring);
+                border-radius: 14px;
+                background: linear-gradient(180deg, #0b1331 0, #0a1125 100%);
+                margin-top: 20px;
+            }
+            .ticker {
+                display: flex;
+                gap: 28px;
+                white-space: nowrap;
+                animation: scroll 34s linear infinite;
+            }
+            .tick {
+                display: inline-flex;
+                gap: 8px;
+                align-items: center;
+                padding: 14px 0;
+            }
+            .tick .badge {
+                display: inline-block;
+                background: rgba(255, 255, 255, 0.08);
+                border: 1px solid var(--ring);
+                padding: 6px 10px;
+                border-radius: 999px;
+                font-weight: 600;
+            }
+            @keyframes scroll {
+                0% {
+                    transform: translateX(0);
+                }
+                100% {
+                    transform: translateX(-50%);
+                }
+            }
+            .achievements {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 18px;
+                margin-top: 18px;
+            }
+            .achievements .card h3 {
+                margin: 8px 0 6px;
+            }
+            .muted {
+                color: var(--muted);
+            }
+            /* ====== Competitions gallery ====== */
+            .comp-grid {
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
+                gap: 16px;
+                margin-top: 24px;
+            }
+            .comp {
+                padding: 18px;
+                border-radius: 14px;
+                border: 1px solid var(--ring);
+                background: linear-gradient(180deg, #0f1a35, #0d152c);
+            }
+            .comp svg {
+                width: 34px;
+                height: 34px;
+            }
+            .comp h4 {
+                margin: 10px 0 4px;
+            }
+            /* ====== CTA ====== */
+            .cta {
+                background: radial-gradient(
+                        800px 400px at 20% 20%,
+                        rgba(107, 113, 255, 0.25),
+                        transparent 60%
+                    ),
+                    radial-gradient(
+                        800px 400px at 90% 0%,
+                        rgba(34, 211, 238, 0.18),
+                        transparent 60%
+                    ),
+                    linear-gradient(180deg, #0d1430, #0a1125);
+            }
+            .cta-card {
+                display: grid;
+                grid-template-columns: 1.2fr 0.8fr;
+                gap: 24px;
+                align-items: center;
+                padding: 28px;
+                border: 1px solid var(--ring);
+                border-radius: 24px;
+                background: linear-gradient(180deg, #0b1331, #0a122b);
+                box-shadow: var(--shadow);
+            }
+            .form {
+                display: grid;
+                grid-template-columns: 1fr auto;
+                gap: 12px;
+            }
+            input[type="email"] {
+                width: 100%;
+                padding: 14px 16px;
+                border-radius: 12px;
+                border: 1px solid var(--ring);
+                background: #0b1430;
+                color: var(--text);
+                outline: none;
+            }
+            button[type="submit"] {
+                padding: 14px 18px;
+                border-radius: 12px;
+                border: 0;
+                background: linear-gradient(
+                    135deg,
+                    var(--brand-1),
+                    var(--brand-2)
+                );
+                color: white;
+                font-weight: 700;
+            }
+            .legal {
+                font-size: 12px;
+                opacity: 0.8;
+                margin-top: 6px;
+            }
+            .success {
+                display: none;
+                margin-top: 10px;
+                color: var(--success);
+                font-weight: 700;
+            }
+            .error {
+                display: none;
+                margin-top: 10px;
+                color: var(--danger);
+                font-weight: 700;
+            }
+            /* ====== Footer ====== */
+            footer {
+                padding: 40px 0 60px;
+                border-top: 1px solid var(--ring);
+                background: #0a1124;
+            }
+            .foot-grid {
+                display: grid;
+                grid-template-columns: 2fr 1fr 1fr;
+                gap: 20px;
+            }
+            .fine {
+                font-size: 12px;
+                opacity: 0.7;
+                margin-top: 10px;
+            }
+            /* ====== Responsive ====== */
+            @media (max-width: 1000px) {
+                .hero-grid {
+                    grid-template-columns: 1fr;
+                }
+                .grid.cols-3 {
+                    grid-template-columns: 1fr 1fr;
+                }
+                .achievements {
+                    grid-template-columns: 1fr 1fr;
+                }
+                .comp-grid {
+                    grid-template-columns: 1fr 1fr;
+                }
+                .cta-card {
+                    grid-template-columns: 1fr;
+                }
+                .hero-stats {
+                    grid-template-columns: 1fr 1fr 1fr;
+                }
+            }
+            @media (max-width: 640px) {
+                .grid.cols-3 {
+                    grid-template-columns: 1fr;
+                }
+                .achievements {
+                    grid-template-columns: 1fr;
+                }
+                .comp-grid {
+                    grid-template-columns: 1fr;
+                }
+                .hero-stats {
+                    grid-template-columns: 1fr 1fr;
+                }
+                .nav a.link {
+                    display: none;
+                }
+            }
+            /* ====== Reveal animations (scroll) ====== */
+            .reveal {
+                opacity: 0;
+                transform: translateY(20px);
+                transition: all 0.7s cubic-bezier(0.2, 0.7, 0, 1);
+            }
+            .reveal.show {
+                opacity: 1;
+                transform: none;
+            }
+            .pulse {
+                animation: pulse 2.2s ease-in-out infinite;
+            }
+            @keyframes pulse {
+                0%,
+                100% {
+                    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
+                }
+                50% {
+                    box-shadow: 0 0 0 10px rgba(255, 255, 255, 0.06);
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <!-- ====== HERO ====== -->
+        <header class="hero">
+            <div class="blob one"></div>
+            <div class="blob two"></div>
+            <div class="blob three"></div>
+
+            <nav class="nav">
+                <div class="container nav-inner">
+                    <div class="brand">
+                        <div class="brand-badge" aria-hidden="true"></div>
+                        <span>SkillsUSA @ [Your School]</span>
+                    </div>
+                    <div>
+                        <a class="link" href="#about">About</a>
+                        <a class="link" href="#stats">Stats</a>
+                        <a class="link" href="#achievements">Our Year</a>
+                        <a class="link" href="#competitions">Competitions</a>
+                        <a class="cta" href="#join">Join the Email List</a>
+                    </div>
+                </div>
+            </nav>
+
+            <div class="container hero-grid">
+                <div>
+                    <div class="eyebrow">
+                        <span class="dot"></span><span>Champions at Work</span>
+                    </div>
+                    <h1>
+                        Build real skills. Lead with confidence.
+                        <span
+                            style="
+                                background: linear-gradient(
+                                    135deg,
+                                    var(--brand-1),
+                                    var(--brand-2)
+                                );
+                                -webkit-background-clip: text;
+                                background-clip: text;
+                                color: transparent;
+                            "
+                            >Win opportunities.</span
+                        >
+                    </h1>
+                    <p class="sub">
+                        SkillsUSA connects classroom learning to the real world
+                        through leadership, service, and hands-on competitions.
+                        If you want internships, industry contacts, and a
+                        portfolio that stands out, you’re in the right place.
+                    </p>
+                    <div class="cta-row">
+                        <a href="#join" class="btn primary"
+                            >Join our email list</a
+                        >
+                        <a href="#competitions" class="btn">See competitions</a>
+                    </div>
+                </div>
+
+                <aside class="hero-card reveal">
+                    <div class="chip">SkillsUSA at a glance</div>
+                    <div class="hero-stats">
+                        <div class="stat">
+                            <div class="num" data-count="442000">0</div>
+                            <div class="label">Members nationwide</div>
+                        </div>
+                        <div class="stat">
+                            <div class="num" data-count="114">0</div>
+                            <div class="label">National contests</div>
+                        </div>
+                        <div class="stat">
+                            <div class="num" data-count="6500" data-suffix="+">
+                                0
+                            </div>
+                            <div class="label">Championship competitors</div>
+                        </div>
+                    </div>
+                    <p class="muted" style="margin-top: 10px; font-size: 13px">
+                        Source: skillsusa.org (membership & championships).
+                    </p>
+                </aside>
+            </div>
+        </header>
+
+        <!-- ====== ABOUT ====== -->
+        <section id="about">
+            <div class="container">
+                <h2 class="section-title">What is SkillsUSA?</h2>
+                <p class="section-sub">
+                    SkillsUSA is the nation’s leading workforce development
+                    organization for students in career and technical education.
+                    Chapters operate in middle schools, high schools, and
+                    colleges across the country. Members train with industry,
+                    serve the community, and compete in career- and
+                    leadership-based events — graduating ready for high-demand
+                    careers.
+                </p>
+                <div class="grid cols-3" style="margin-top: 22px">
+                    <div class="card reveal">
+                        <div class="kpi" data-count="50">0</div>
+                        <div class="kpi-label">States + D.C., PR, VI</div>
+                    </div>
+                    <div class="card reveal">
+                        <div class="kpi" data-count="19000" data-suffix="+">
+                            0
+                        </div>
+                        <div class="kpi-label">Attendees at NLSC</div>
+                    </div>
+                    <div class="card reveal">
+                        <div class="kpi" data-count="100" data-suffix="+">
+                            0
+                        </div>
+                        <div class="kpi-label">
+                            Industry partners (national & state)
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ====== CLUB STATS / PLACEHOLDERS ====== -->
+        <section id="achievements">
+            <div class="container">
+                <h2 class="section-title">Our Year in Numbers</h2>
+                <p class="section-sub">
+                    Swap these placeholders with your club’s actual results. The
+                    cards animate like Slack’s stat callouts when they scroll
+                    into view.
+                </p>
+
+                <div class="ticker-wrap reveal">
+                    <div class="ticker" aria-hidden="true">
+                        <!-- Duplicate items for seamless loop -->
+                        <div class="tick">
+                            <span class="badge">STATE CHAMPS</span
+                            ><span class="muted"
+                                >Celebrating student excellence</span
+                            >
+                        </div>
+                        <div class="tick">
+                            <span class="badge">COMMUNITY IMPACT</span
+                            ><span class="muted"
+                                >Service projects & outreach</span
+                            >
+                        </div>
+                        <div class="tick">
+                            <span class="badge">INDUSTRY MENTORS</span
+                            ><span class="muted">Real-world coaching</span>
+                        </div>
+                        <div class="tick">
+                            <span class="badge">CAREER READY</span
+                            ><span class="muted">Certs & internships</span>
+                        </div>
+
+                        <div class="tick">
+                            <span class="badge">STATE CHAMPS</span
+                            ><span class="muted"
+                                >Celebrating student excellence</span
+                            >
+                        </div>
+                        <div class="tick"><span class="badge">COMM </span></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </body>
+</html>
