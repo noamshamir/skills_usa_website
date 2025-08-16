@@ -202,10 +202,15 @@
             /* Hero grid for side-by-side boxes */
             .hero-grid {
                 display: grid;
-                grid-template-columns: 1fr 1fr;
+                grid-template-columns: repeat(3, 1fr);
                 gap: 18px;
                 align-items: stretch;
                 margin-top: 22px;
+            }
+            @media (max-width: 1100px) {
+                .hero-grid {
+                    grid-template-columns: repeat(2, 1fr);
+                }
             }
             @media (max-width: 900px) {
                 .hero-grid {
@@ -241,7 +246,7 @@
                 margin-bottom: 6px;
             }
             .event__title {
-                font-size: clamp(1.25rem, 1.2vw + 1rem, 1.6rem);
+                font-size: 20px;
                 font-weight: 900;
                 letter-spacing: -0.01em;
                 margin: 10px 0 6px;
@@ -312,13 +317,15 @@
             }
             .cta__note {
                 width: 100%;
+                margin-top: 30px;
                 font-weight: 700;
                 color: var(--muted);
-                padding-left: 2px;
+                margin-left: 5px;
             }
             .cta__label {
                 font-weight: 800;
                 margin-top: 8px;
+                font-size: 18px;
                 margin-left: 5px;
                 letter-spacing: 0.2px;
                 display: block;
@@ -609,8 +616,7 @@
                                 First Meeting: Friday, August 22
                             </div>
                             <div class="event__meta">
-                                Brewster Hall Meeting Room • All students
-                                welcome
+                                Brewster Hall Meeting Room • Open to all
                             </div>
                         </div>
                         <div class="event__actions"></div>
@@ -621,7 +627,7 @@
                         role="region"
                         aria-label="Email signup"
                     >
-                        <div class="cta__label">Get updates & tryouts info</div>
+                        <div class="cta__label">Get email updates</div>
                         <form
                             class="cta__form"
                             aria-label="Sign up for email updates"
@@ -648,6 +654,15 @@
                                 Join
                             </button>
                         </form>
+                    </div>
+                    <div class="hero-card" role="region" aria-label="Questions">
+                        <div class="cta__label">Questions?</div>
+                        <div class="cta__note">
+                            Email
+                            <a href="mailto:isaac.lin@sstx.org"
+                                >isaac.lin@sstx.org</a
+                            >
+                        </div>
                     </div>
                 </div>
 
