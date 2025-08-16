@@ -629,6 +629,7 @@
                         <div class="cta__label">Get email updates</div>
                         <form
                             class="cta__form"
+                            id="emailSignup"
                             aria-label="Sign up for email updates"
                         >
                             <label
@@ -652,6 +653,14 @@
                             >
                                 Join
                             </button>
+                            <noscript>
+                                <p class="cta__note">
+                                    JavaScript is required to submit. Or email
+                                    <a href="mailto:isaac.lin@sstx.org"
+                                        >isaac.lin@sstx.org</a
+                                    >.
+                                </p>
+                            </noscript>
                         </form>
                     </div>
                     <div class="hero-card" role="region" aria-label="Questions">
@@ -819,8 +828,7 @@
                 "
             ></div>
             <div>
-                <strong>You're on the list!</strong> Check your inbox for a
-                confirmation.
+                <strong>You're on the list!</strong>
             </div>
         </div>
 
@@ -854,6 +862,44 @@
                 });
             })();
 
+            // Email signup -> Google Sheet via Apps Script Web App
+            (function () {
+                const form = document.getElementById("emailSignup");
+                const emailInput = document.getElementById("email");
+                const toast = document.getElementById("toast");
+                // TODO: Replace with your deployed Apps Script Web App URL
+                const ENDPOINT =
+                    "https://script.google.com/macros/s/AKfycbyhbuS109en2U2u3-d2oNeUmc2VJ1QqfeCTdIgUz0_-kJrv6pyQeUGTgydwKel_PlIp/exec";
+
+                if (!form) return;
+                form.addEventListener("submit", async (e) => {
+                    e.preventDefault();
+                    const email = (emailInput?.value || "").trim();
+                    if (!email) return;
+                    try {
+                        const res = await fetch(ENDPOINT, {
+                            method: "POST",
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify({
+                                email,
+                                ts: new Date().toISOString(),
+                            }),
+                        });
+                        if (!res.ok) throw new Error("Network error");
+                        // Optional: check JSON response
+                        // const data = await res.json();
+                        toast?.classList.add("show");
+                        setTimeout(() => toast?.classList.remove("show"), 3500);
+                        form.reset();
+                    } catch (err) {
+                        alert(
+                            "Sorry, there was an issue joining the list. Please try again later or email isaac.lin@sstx.org."
+                        );
+                        console.error(err);
+                    }
+                });
+            })();
+
             // Count-up on view
             (function () {
                 const els = document.querySelectorAll(".countup");
@@ -883,22 +929,6 @@
                     { threshold: 0.65 }
                 );
                 els.forEach((el) => io.observe(el));
-            })();
-
-            // Email fake submit + toast (replace with real endpoint later)
-            (function () {
-                const form = document.querySelector("form.cta__form");
-                const toast = document.getElementById("toast");
-                const email = document.getElementById("email");
-                form?.addEventListener("submit", (e) => {
-                    e.preventDefault();
-                    // TODO: Replace with your POST to an endpoint like Formspree, GetForm, or school Google Form
-                    if (email?.value) {
-                        toast?.classList.add("show");
-                        setTimeout(() => toast?.classList.remove("show"), 3500);
-                        form.reset();
-                    }
-                });
             })();
 
             // Year
